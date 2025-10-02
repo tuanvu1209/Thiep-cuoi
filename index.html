@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ngày Cưới - 26.12.2025</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, 'Noto Sans', 'Segoe UI', sans-serif;
+            background-color: #ffffff;
+            width: 100%;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.15); }
+        }
+
+        /* Scroll Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+        }
+
+        .animate-on-scroll.animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        .fade-in-up.animated {
+            animation-name: fadeInUp;
+        }
+
+        .fade-in-down.animated {
+            animation-name: fadeInDown;
+        }
+
+        .fade-in-left.animated {
+            animation-name: fadeInLeft;
+        }
+
+        .fade-in-right.animated {
+            animation-name: fadeInRight;
+        }
+
+        .fade-in.animated {
+            animation-name: fadeIn;
+        }
+
+        .zoom-in.animated {
+            animation-name: zoomIn;
+        }
+
+        /* Hero Section */
+        .hero-image {
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('./images/IMG_3225.JPG');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .hero-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bride-name {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            /* transform: translateY(-50%); */
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            animation: fadeInLeft 1.5s ease-out;
+        }
+
+        .bride-name .name {
+            font-size: 20px;
+            letter-spacing: 3px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            font-family: Georgia, serif;
+        }
+
+        .bride-name .role {
+            font-size: 18px;
+            letter-spacing: 6px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .groom-name {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            /* transform: translateY(-50%); */
+            color: white;
+            text-align: right;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            animation: fadeInRight 1.5s ease-out;
+        }
+
+        .groom-name .name {
+            font-size: 20px;
+            letter-spacing: 3px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            font-family: Georgia, serif;
+        }
+
+        .groom-name .role {
+            font-size: 18px;
+            letter-spacing: 6px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .hero-date {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            /* animation: fadeInUp 1.5s ease-out; */
+        }
+
+        .hero-date .date-number {
+            font-size: 36px;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        /* Responsive for small screens */
+        @media (max-width: 375px) {
+            .bride-name {
+                left: 20px;
+            }
+            .bride-name .name,
+            .groom-name .name {
+                font-size: 24px;
+            }
+            .bride-name .role,
+            .groom-name .role {
+                font-size: 14px;
+                letter-spacing: 4px;
+            }
+            .groom-name {
+                right: 20px;
+            }
+            .hero-date .date-number {
+                font-size: 28px;
+            }
+            .photo-section {
+                padding: 30px 20px;
+            }
+            .text-section {
+                padding: 40px 20px;
+            }
+            .heart-section {
+                padding: 50px 20px;
+            }
+        }
+
+        /* Photo Section */
+        .photo-section {
+            width: 100%;
+            padding: 40px 30px;
+            background: white;
+        }
+
+        .photo-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+        }
+
+        /* Text Section */
+        .text-section {
+            background: white;
+            text-align: center;
+            padding: 50px 30px;
+        }
+
+        .date-main {
+            font-size: 15px;
+            letter-spacing: 4px;
+            color: #666;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: #bbb;
+            margin: 25px auto;
+        }
+
+        .main-text {
+            font-size: 14px;
+            line-height: 2;
+            color: #777;
+            letter-spacing: 0.5px;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: #f9f9f9;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .quote-icon {
+            font-size: 32px;
+            color: #bbb;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: 14px;
+            line-height: 2.2;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        .quote-author {
+            font-size: 12px;
+            color: #999;
+            margin-top: 25px;
+            letter-spacing: 1px;
+        }
+
+        /* Title Section */
+        .title-section {
+            background: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 16px;
+            letter-spacing: 3px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Large Photo */
+        .large-photo {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .large-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Heart Section */
+        .heart-section {
+            background: white;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .heart-icon {
+            color: #d94141;
+            font-size: 24px;
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: heartBeat 2s infinite;
+        }
+
+        .heart-title {
+            font-size: 16px;
+            letter-spacing: 3px;
+            color: #d94141;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .heart-text {
+            font-size: 14px;
+            line-height: 2;
+            color: #666;
+            letter-spacing: 0.5px;
+        }
+
+        /* Photo Grid */
+        .photo-grid {
+            background: white;
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .photo-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .caption-section {
+            background: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .caption-text {
+            font-size: 13px;
+            line-height: 2;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+
+        /* Love Story Timeline */
+        .love-timeline {
+            background: linear-gradient(to bottom, #ffffff 0%, #fafafa 50%, #ffffff 100%);
+            padding: 60px 20px;
+            position: relative;
+        }
+
+        .timeline-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .timeline-title h2 {
+            font-size: 18px;
+            letter-spacing: 3px;
+            color: #d94141;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .timeline-subtitle {
+            font-size: 13px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Timeline Line */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent 0%, #d94141 10%, #d94141 90%, transparent 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            opacity: 0;
+        }
+
+        .timeline-item.animated {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+
+        /* Alternate layout */
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: auto;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            padding-left: 40px;
+            text-align: left;
+        }
+
+        .timeline-content {
+            width: 50%;
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d94141 0%, #c93535 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(217, 65, 65, 0.3);
+            z-index: 2;
+            border: 4px solid white;
+        }
+
+        .timeline-icon span {
+            font-size: 24px;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #d94141;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .timeline-label {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.8;
+        }
+
+        /* Mobile Layout */
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 25px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                padding-left: 70px;
+                padding-right: 0;
+                text-align: left;
+            }
+
+            .timeline-icon {
+                left: 25px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .timeline-icon span {
+                font-size: 20px;
+            }
+        }
+
+        /* Map Section */
+        .map-section {
+            background: white;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 350px;
+            margin: 30px 0;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 2px solid #f0f0f0;
+        }
+
+        #weddingMap {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Custom Leaflet marker */
+        .custom-marker {
+            background-color: #d94141;
+            width: 40px;
+            height: 40px;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(217, 65, 65, 0.5);
+        }
+
+        .custom-marker::after {
+            content: '💒';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            font-size: 20px;
+        }
+
+        /* Leaflet popup custom style */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .leaflet-popup-content {
+            margin: 15px;
+            font-family: -apple-system, 'Noto Sans', 'Segoe UI', sans-serif;
+        }
+
+        .popup-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #d94141;
+            margin-bottom: 5px;
+        }
+
+        .popup-address {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .map-container {
+                height: 300px;
+            }
+        }
+
+        .map-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 20px;
+            line-height: 2;
+        }
+
+        .location-details {
+            font-size: 12px;
+            color: #999;
+            line-height: 2;
+            margin-top: 15px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fafafa;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .footer-date {
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: #888;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .footer-divider {
+            width: 50px;
+            height: 1px;
+            background: #ccc;
+            margin: 30px auto;
+        }
+
+        .silhouette-container {
+            margin: 40px 0;
+        }
+
+        .silhouette {
+            width: 60px;
+            height: 90px;
+            margin: 0 auto;
+        }
+
+        .silhouette svg {
+            width: 100%;
+            height: 100%;
+            fill: #555;
+        }
+
+        .thank-you {
+            font-size: 20px;
+            color: #666;
+            letter-spacing: 2px;
+            font-style: italic;
+            margin: 30px 0 20px;
+            font-family: Georgia, serif;
+        }
+
+        .footer-message {
+            font-size: 13px;
+            color: #999;
+            line-height: 2;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            animation: fadeIn 2s ease-out 1s both;
+        }
+
+        .music-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: visible;
+        }
+
+        .music-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .music-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Vinyl Record Disc */
+        .vinyl-disc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, 
+                #1a1a1a 0%, 
+                #1a1a1a 15%, 
+                #2a2a2a 15%, 
+                #2a2a2a 16%,
+                #1a1a1a 16%, 
+                #1a1a1a 30%,
+                #2a2a2a 30%,
+                #2a2a2a 31%,
+                #1a1a1a 31%,
+                #1a1a1a 45%,
+                #2a2a2a 45%,
+                #2a2a2a 46%,
+                #1a1a1a 46%,
+                #1a1a1a 100%);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        /* Center label of vinyl */
+        .vinyl-disc::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45%;
+            height: 45%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #d94141 0%, #8b2626 100%);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Center hole */
+        .vinyl-disc::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12%;
+            height: 12%;
+            border-radius: 50%;
+            background: #0a0a0a;
+            box-shadow: 0 0 3px rgba(0,0,0,0.8);
+        }
+
+        /* Spinning animation */
+        .music-button.playing .vinyl-disc {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pulse effect when playing */
+        .music-button.playing::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #d94141;
+            animation: pulse 1.5s infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        .music-info {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .music-player:hover .music-info {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 375px) {
+            .music-player {
+                top: 20px;
+                right: 20px;
+            }
+            .music-button {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Music Player -->
+        <div class="music-player">
+            <button class="music-button playing" id="musicToggle">
+                <div class="vinyl-disc"></div>
+            </button>
+            <div class="music-info">Nhạc lễ đường</div>
+        </div>
+
+        <!-- Audio Element -->
+        <audio id="weddingMusic" loop>
+            <source src="wedding-song.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Hero Image -->
+        <div class="hero-image">
+            <div class="hero-content">
+                <!-- Tên cô dâu (bên trái) -->
+                <div class="bride-name">
+                    <div class="name">Bích Loan</div>
+                    <div class="role">BRIDE</div>
+                </div>
+                
+                <!-- Tên chú rể (bên phải) -->
+                <div class="groom-name">
+                    <div class="name">Anh Tuấn</div>
+                    <div class="role">GROOM</div>
+                </div>
+                
+                <!-- Ngày cưới (dưới giữa) -->
+                <div class="hero-date">
+                    <div class="date-number">26.12.2025</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo 1 -->
+        <div class="photo-section animate-on-scroll fade-in-up">
+            <img src="./images/MCK00003.jpg" alt="Cặp đôi">
+        </div>
+
+        <!-- Date Section -->
+        <div class="text-section animate-on-scroll fade-in">
+            <div class="date-main">26 . 12 . 2025 (CHỦ NHẬT)</div>
+            <div class="divider"></div>
+            <div class="main-text">
+                Chúng tôi xin trân trọng kính mời<br>
+                Quý khách đến dự buổi lễ cưới<br>
+                của chúng tôi<br>
+                <br>
+                Sự hiện diện của Quý khách<br>
+                là niềm vinh hạnh cho gia đình chúng tôi
+            </div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="photo-section animate-on-scroll zoom-in">
+            <img src="./images/MCK00103.jpg" alt="Ảnh cưới">
+        </div>
+
+        <!-- Quote Section -->
+        <div class="quote-section animate-on-scroll fade-in-up">
+            <div class="quote-icon">"</div>
+            <div class="quote-text">
+                Tình yêu là sợi dây kết nối đôi ta<br>
+                Kỷ niệm là điều làm đôi ta trở thành một<br>
+                Thời gian là thứ khiến đôi ta gần nhau hơn<br>
+                <br>
+                Mong rằng mọi khoảnh khắc bên nhau<br>
+                sẽ trở thành hạnh phúc vĩnh cửu
+            </div>
+            <div class="quote-author">- Chú rể & Cô dâu -</div>
+        </div>
+
+        <!-- Title -->
+        <div class="title-section animate-on-scroll fade-in-right">
+            <div class="section-title">CÂU CHUYỆN CỦA CHÚNG TÔI</div>
+            <div class="divider"></div>
+        </div>
+
+        <!-- Large Photo -->
+        <div class="large-photo animate-on-scroll fade-in">
+            <img src="./images/MCK00129.jpg" alt="Ảnh đôi">
+        </div>
+
+        <!-- Heart Section -->
+        <div class="heart-section animate-on-scroll fade-in">
+            <div class="heart-icon">❤</div>
+            <div class="heart-title">Như Ngày Đầu Tiên</div>
+            <div class="divider"></div>
+            <div class="heart-text">
+                Giữ mãi cảm xúc ngày đầu gặp gỡ<br>
+                Chia sẻ những tâm tư hướng về nhau<br>
+                Chúng tôi sẽ cùng bước đi suốt cuộc đời<br>
+                <br>
+                Xin hãy chúc phúc cho lời hứa đẹp đẽ<br>
+                mà hai chúng tôi sẽ giữ gìn<br>
+                bằng tình yêu thương
+            </div>
+        </div>
+
+        <!-- Photo Grid -->
+        <div class="photo-grid">
+            <div class="animate-on-scroll fade-in-left">
+                <img src="./images/MCK00237.jpg" alt="Chi tiết 1">
+            </div>
+            <div class="animate-on-scroll fade-in-right">
+                <img src="./images/MCK00578.jpg" alt="Chi tiết 2">
+            </div>
+        </div>
+
+        <!-- Caption -->
+        <div class="caption-section animate-on-scroll fade-in-up">
+            <div class="caption-text">
+                Yêu thương và trân trọng nhau<br>
+                Xây dựng một gia đình hạnh phúc<br>
+                với niềm tin và sự tin tưởng
+            </div>
+        </div>
+
+        <!-- Love Story Timeline -->
+        <div class="love-timeline">
+            <div class="timeline-title">
+                <h2>HÀNH TRÌNH YÊU THƯƠNG</h2>
+                <div class="timeline-subtitle">Câu chuyện tình yêu của chúng tôi</div>
+            </div>
+
+            <div class="timeline-container">
+                <!-- Timeline Line -->
+                <div class="timeline-line"></div>
+
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <span>💕</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">MÙA HÈ 2022</div>
+                        <div class="timeline-label">Lần Đầu Gặp Gỡ</div>
+                        <div class="timeline-desc">
+                            Định mệnh đưa đẩy cho chúng tôi<br>
+                            gặp nhau trong một ngày xuân tươi đẹp
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <span>✨</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">MÙA THU 2022</div>
+                        <div class="timeline-label">Khoảnh Khắc Rung Động</div>
+                        <div class="timeline-desc">
+                            Từ những cuộc trò chuyện đầu tiên<br>
+                            đến khi nhận ra đó chính là tình yêu
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <span>💍</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">MÙA XUÂN 2025</div>
+                        <div class="timeline-label">Lời Hứa Yêu Thương</div>
+                        <div class="timeline-desc">
+                            Anh quỳ gối cầu hôn và em nói có<br>
+                            với lời hứa bên nhau suốt đời
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">
+                        <span>💐</span>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">26.12.2025</div>
+                        <div class="timeline-label">Hạnh Phúc Vĩnh Cửu</div>
+                        <div class="timeline-desc">
+                            Ngày mà chúng tôi chính thức<br>
+                            bước vào cuộc sống mới cùng nhau
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caption 2 -->
+        <div class="caption-section animate-on-scroll fade-in">
+            <div class="caption-text">
+                Mọi khoảnh khắc bên người yêu thương<br>
+                đều là món quà tuyệt vời
+            </div>
+        </div>
+
+        <!-- Two Photos -->
+        <div class="photo-grid">
+            <div class="animate-on-scroll fade-in-left">
+                <img src="./images/MCK00003.jpg" alt="Ảnh 3">
+            </div>
+            <div class="animate-on-scroll fade-in-right">
+                <img src="./images/MCK00103.jpg" alt="Ảnh 4">
+            </div>
+        </div>
+
+        <!-- Single Photo -->
+        <div class="photo-section animate-on-scroll zoom-in">
+            <img src="./images/MCK00129.jpg" alt="Hôn">
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-section animate-on-scroll fade-in-up">
+            <div class="section-title">ĐỊA ĐIỂM TỔ CHỨC</div>
+            <div class="divider"></div>
+            <div class="map-container">
+                <div id="weddingMap"></div>
+            </div>
+            <div class="map-text">
+                <strong>🎤 Karaoke Star</strong><br>
+                Trạo Thôn, Đa Lộc, Hưng Yên
+            </div>
+            <div class="location-details">
+                📍 Tọa độ: 20.7855° N, 106.1346° E<br>
+                🚗 Có bãi đỗ xe miễn phí<br>
+                📞 Hotline: 0902572001<br>
+                <br>
+                <em style="color: #999; font-size: 11px;">💡 Click vào bản đồ hoặc marker để mở Google Maps</em>
+            </div>
+        </div>
+
+        <!-- More Photos -->
+        <div class="large-photo animate-on-scroll fade-in">
+            <img src="./images/MCK00237.jpg" alt="Đi bộ">
+        </div>
+
+        <div class="large-photo animate-on-scroll fade-in">
+            <img src="./images/MCK00578.jpg" alt="Ngoài trời">
+        </div>
+
+        <div class="photo-section animate-on-scroll zoom-in">
+            <img src="./images/IMG_3225.JPG" alt="Cuối cùng">
+        </div>
+
+        <!-- Footer -->
+        <div class="footer animate-on-scroll fade-in">
+            <div class="footer-date">GHI NHỚ NGÀY ĐẶC BIỆT</div>
+            <div class="footer-divider"></div>
+            
+            <div class="silhouette-container">
+                <div class="silhouette">
+                    <svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Groom -->
+                        <ellipse cx="35" cy="20" rx="8" ry="10"/>
+                        <rect x="30" y="30" width="10" height="25" rx="2"/>
+                        <rect x="28" y="32" width="4" height="30"/>
+                        <rect x="38" y="32" width="4" height="30"/>
+                        <rect x="30" y="55" width="5" height="35"/>
+                        <rect x="35" y="55" width="5" height="35"/>
+                        
+                        <!-- Bride -->
+                        <ellipse cx="65" cy="18" rx="8" ry="10"/>
+                        <rect x="60" y="28" width="10" height="20" rx="2"/>
+                        <polygon points="55,48 75,48 78,90 52,90"/>
+                        <rect x="58" y="28" width="4" height="25"/>
+                        <rect x="68" y="28" width="4" height="25"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="thank-you">Thank you</div>
+            <div class="footer-message">
+                Nếu không thể đến tham dự<br>
+                xin hãy gửi lời chúc phúc đến chúng tôi<br>
+                <br>
+                Chân thành cảm ơn
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Special observer for timeline items
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const items = entry.target.querySelectorAll('.timeline-item');
+                    items.forEach(item => {
+                        item.classList.add('animated');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const timelineContainer = document.querySelector('.love-timeline');
+        if (timelineContainer) {
+            timelineObserver.observe(timelineContainer);
+        }
+
+        // Music Player Control
+        const musicToggle = document.getElementById('musicToggle');
+        const weddingMusic = document.getElementById('weddingMusic');
+        let isPlaying = true; // Start as true since we auto-play
+
+        // Auto-play music when page loads
+        window.addEventListener('load', () => {
+            // Try to play immediately
+            weddingMusic.play().then(() => {
+                isPlaying = true;
+                musicToggle.classList.add('playing');
+                console.log('Music started automatically');
+            }).catch((error) => {
+                // Auto-play was blocked, will try on first interaction
+                console.log('Auto-play blocked, waiting for user interaction...');
+                isPlaying = false;
+                musicToggle.classList.remove('playing');
+                
+                // Try again on first user interaction
+                const startMusic = () => {
+                    weddingMusic.play().then(() => {
+                        isPlaying = true;
+                        musicToggle.classList.add('playing');
+                    }).catch(() => {});
+                };
+                
+                document.addEventListener('click', startMusic, { once: true });
+                document.addEventListener('scroll', startMusic, { once: true });
+                document.addEventListener('touchstart', startMusic, { once: true });
+            });
+        });
+
+        // Toggle music on button click
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            if (isPlaying) {
+                weddingMusic.pause();
+                musicToggle.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                weddingMusic.play().then(() => {
+                    musicToggle.classList.add('playing');
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log('Error playing music:', err);
+                });
+            }
+        });
+
+        // Handle music pause/play events
+        weddingMusic.addEventListener('play', () => {
+            musicToggle.classList.add('playing');
+            isPlaying = true;
+        });
+
+        weddingMusic.addEventListener('pause', () => {
+            musicToggle.classList.remove('playing');
+            isPlaying = false;
+        });
+    </script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Initialize Map -->
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize map - Karaoke Star, Hưng Yên
+            // Coordinates from Google Maps
+            const weddingLocation = [20.7855241, 106.1345679]; // Lat, Lng
+            
+            // Create map
+            const map = L.map('weddingMap', {
+                center: weddingLocation,
+                zoom: 16,
+                zoomControl: true,
+                scrollWheelZoom: false, // Disable scroll zoom for better UX
+                dragging: true,
+                touchZoom: true
+            });
+
+            // Add tile layer (map style)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Custom icon for marker
+            const weddingIcon = L.divIcon({
+                className: 'custom-marker',
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+
+            // Google Maps URL
+            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${weddingLocation[0]},${weddingLocation[1]}`;
+            
+            // Add marker
+            const marker = L.marker(weddingLocation, {
+                icon: weddingIcon
+            }).addTo(map);
+
+            // Add popup with venue information
+            marker.bindPopup(`
+                <div class="popup-content">
+                    <div class="popup-title">🎤 Karaoke Star</div>
+                    <div class="popup-address">
+                        📍 Trạo Thôn, Đa Lộc, Hưng Yên<br>
+                        <br>
+                        📞 <a href="tel:0902572001" style="color:#d94141; text-decoration:none;">0902572001</a><br>
+                        <br>
+                        <a href="${googleMapsUrl}" target="_blank" style="display:inline-block; background:#d94141; color:white; padding:8px 16px; text-decoration:none; border-radius:6px; font-size:12px; font-weight:600; margin-top:5px;">
+                            🗺️ Mở trong Google Maps
+                        </a>
+                    </div>
+                </div>
+            `).openPopup();
+
+            // Click on marker to open Google Maps
+            marker.on('click', function(e) {
+                // Prevent map click event
+                L.DomEvent.stopPropagation(e);
+                window.open(googleMapsUrl, '_blank');
+            });
+
+            // Double-click anywhere on map to open Google Maps
+            map.on('dblclick', function() {
+                window.open(googleMapsUrl, '_blank');
+            });
+
+            // Add a circle to highlight the area (clickable)
+            const circle = L.circle(weddingLocation, {
+                color: '#d94141',
+                fillColor: '#d94141',
+                fillOpacity: 0.1,
+                radius: 100
+            }).addTo(map);
+
+            // Click on circle to open Google Maps
+            circle.on('click', function() {
+                window.open(googleMapsUrl, '_blank');
+            });
+
+            // Add "Open in Google Maps" button
+            const googleMapsBtn = L.control({position: 'topright'});
+            googleMapsBtn.onAdd = function() {
+                const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                div.innerHTML = `
+                    <a href="${googleMapsUrl}" 
+                       target="_blank" 
+                       title="Mở trong Google Maps"
+                       style="background:white; width:34px; height:34px; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:18px; border-radius:4px; box-shadow:0 2px 5px rgba(0,0,0,0.2); cursor:pointer;">
+                       🗺️
+                    </a>
+                `;
+                return div;
+            };
+            googleMapsBtn.addTo(map);
+
+            // Add "Get Directions" button (mobile optimized)
+            const directionsBtn = L.control({position: 'bottomright'});
+            directionsBtn.onAdd = function() {
+                const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                div.innerHTML = `
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${weddingLocation[0]},${weddingLocation[1]}" 
+                       target="_blank" 
+                       style="background:#d94141; padding:10px 16px; display:block; text-decoration:none; color:white; font-size:13px; font-weight:600; border-radius:6px; box-shadow:0 3px 8px rgba(217,65,65,0.4);">
+                       🧭 Chỉ đường
+                    </a>
+                `;
+                return div;
+            };
+            directionsBtn.addTo(map);
+        });
+    </script>
+</body>
+</html>
