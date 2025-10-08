@@ -104,12 +104,21 @@ Xem file `HUONG-DAN-MAP.md` để biết cách:
 3. Đĩa than sẽ quay khi nhạc đang phát
 4. Click đĩa than để tắt/bật
 
-### Deploy Online
-Upload toàn bộ thư mục lên:
-- GitHub Pages
-- Netlify
-- Vercel
-- Hosting của bạn
+### Deploy Online & Share Link
+**📱 Để share link với preview đẹp trên Messenger/Zalo:**
+
+Xem hướng dẫn chi tiết: **`HUONG-DAN-SHARE-LINK.md`**
+
+**Tóm tắt:**
+1. Deploy lên hosting (GitHub Pages/Netlify/Vercel)
+2. Cập nhật `og:url` và `og:image` với absolute URL
+3. Test trên Facebook Debugger
+4. Share!
+
+**Hosting miễn phí:**
+- GitHub Pages: `https://username.github.io/repo-name/`
+- Netlify: `https://your-site.netlify.app`
+- Vercel: `https://your-site.vercel.app`
 
 ## 📝 Lưu Ý
 
